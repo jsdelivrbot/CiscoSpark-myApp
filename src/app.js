@@ -40,8 +40,6 @@ function bindCallEvents(call) {
   });
 }
 
-document.getElementById(`dialer`).addEventListener(`submit`, (event) => {
-  event.preventDefault();
 
 spark.once(`ready`, function() {
 
@@ -75,3 +73,4 @@ spark.once(`ready`, function() {
     });
   }
 });
+
