@@ -4,11 +4,16 @@
   "description": "First app using cisco spark sdk in Telstra",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "author": "Katherine Chen",
   "license": "ISC",
   "dependencies": {
-    "ciscospark": "^1.23.4"
+    "ciscospark": "^1.23.4",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "webpack": "^3.10.0"
   }
 }
