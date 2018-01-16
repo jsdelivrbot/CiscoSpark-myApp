@@ -1,12 +1,20 @@
-import _ from 'lodash';
+var CiscoSpark = require('ciscospark');
+var spark = CiscoSpark.init({
+  config: {
+    credentials: {
+      authorizationString: "{my token}",
+      // By setting `clientType` to `confidential`, initiateLogin will
+      // know to ask for an auth code instead of an access token.
+      clientType: 'confidential'
+    }
+  }
+});
 
-function component() {
-  var element = document.createElement('div');
-
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-  return element;
-}
-
-document.body.appendChild(component());
+spark.once(`ready`, function() {
+  if (spark.canAuthorize) {
+    // your app logic goes here
+  }
+  else {
+    spark.authorization.initiateLogin()
+  }
+});
