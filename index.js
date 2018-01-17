@@ -1,9 +1,10 @@
-var spark = require('ciscospark/env');
-spark.rooms.create({
-  title: `My First Room!`
-})
-// Make sure to log errors in case something goes wrong.
-  .catch(function(reason) {
-    console.error(reason);
-    process.exit(1);
-  });
+var app = require('express')();
+var http = require('http').Server(app);
+
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
