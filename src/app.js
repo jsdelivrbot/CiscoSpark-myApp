@@ -1,20 +1,27 @@
+// This is one way you might programattically determine your redirect_uri
+// depending on where you've deployed your app, but you're probably better off
+// having development/staging/production builds and injecting directly from the
+// environment.
+let redirect_uri = `${window.location.protocol}//${window.location.host}`;
+if (window.location.pathname) {
+  redirect_uri += window.location.pathname;
+}
+console.log(redirect_uri)
+
+// Inititate the SDK
+// IN A PRODUCTION APP YOU SHOULD NOT HARDCODE THESE VALUES BUT INSTEAD LOAD
+// THEM FROM THE ENVIRONMENT AT BUILD TIME. SECRETS AND OTHER CREDENTIALS SHOULD
+// NOT BE COMMITTED TO THE CODEBASE.
 const spark = ciscospark.init({
   config: {
     credentials: {
-      authorizationString: 'https://api.ciscospark.com/v1/authorize?client_id=Cc10a118c61537a4318aec92364ac632c76c7c2323b9d3214211dd1975ce59323&response_type=code&redirect_uri=localhost%3A3333&scope=spark%3Aall%20spark%3Akms&state=set_state_here',
-      redircect_url: 'localhost:3333',
+      client_id: 'Cc10a118c61537a4318aec92364ac632c76c7c2323b9d3214211dd1975ce59323',
+      redirect_uri,
+      scope: 'spark:all spark:kms'
     }
   }
 });
 
-spark.once(`ready`, function() {
-  if (spark.canAuthorize) {
-    // your app logic goes here
-  }
-  else {
-    spark.authorization.initiateLogin();
-  }
-});
 
 function bindCallEvents(call) {
   call.on(`error`, (err) => {
