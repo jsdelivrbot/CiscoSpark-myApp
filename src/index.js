@@ -18,7 +18,8 @@ class App extends Component {
 
       this.state = {
         videos: [],
-        selectedVideo: null
+        selectedVideo: null,
+        messages: []
       };
 
       this.videoSearch('surfboards');
@@ -33,6 +34,11 @@ class App extends Component {
     });
   }
 
+  sendMessage(message) {
+    this.setState({messages: [...this.state.messages, message]});
+    console.log(this.state);
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
 
@@ -41,7 +47,7 @@ class App extends Component {
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
           <ChatPanel />
-          <ChatInput />
+          <ChatInput onMessageSent={message => this.sendMessage(message)}/>
           <VideoDetail video={this.state.selectedVideo} />
           <VideoList
             onVideoSelect={selectedVideo => this.setState({selectedVideo})}
