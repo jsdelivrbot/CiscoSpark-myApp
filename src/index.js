@@ -46,7 +46,7 @@ class App extends Component {
       <div>
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
-          <ChatPanel />
+          <ChatPanel messages={this.state.messages}/>
           <ChatInput onMessageSent={message => this.sendMessage(message)}/>
           <VideoDetail video={this.state.selectedVideo} />
           <VideoList
