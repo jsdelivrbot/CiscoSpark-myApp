@@ -6,7 +6,7 @@ import YTSearch from 'youtube-api-search'
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
-import ChatRoom from './components/chat_room';
+import ChatInput from './components/chat_input';
 
 const API_KEY = 'AIzaSyCmIDGCn6iZ3s2KH0MYhD7q1-pKnVvJmlI';
 
@@ -39,7 +39,7 @@ class App extends Component {
       <div>
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
-          <ChatRoom />
+          <ChatInput />
           <VideoDetail video={this.state.selectedVideo} />
           <VideoList
             onVideoSelect={selectedVideo => this.setState({selectedVideo})}
