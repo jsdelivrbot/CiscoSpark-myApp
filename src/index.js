@@ -7,6 +7,7 @@ import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import ChatInput from './components/chat_input';
+import ChatPanel from './components/chat_panel';
 
 const API_KEY = 'AIzaSyCmIDGCn6iZ3s2KH0MYhD7q1-pKnVvJmlI';
 
@@ -39,6 +40,7 @@ class App extends Component {
       <div>
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
+          <ChatPanel />
           <ChatInput />
           <VideoDetail video={this.state.selectedVideo} />
           <VideoList
