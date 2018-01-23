@@ -7,6 +7,7 @@ import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import ChatInput from './components/chat_input';
+import ChatPanel from './components/chat_panel';
 
 const API_KEY = 'AIzaSyCmIDGCn6iZ3s2KH0MYhD7q1-pKnVvJmlI';
 
@@ -17,7 +18,8 @@ class App extends Component {
 
       this.state = {
         videos: [],
-        selectedVideo: null
+        selectedVideo: null,
+        messages: []
       };
 
       this.videoSearch('surfboards');
@@ -32,6 +34,11 @@ class App extends Component {
     });
   }
 
+  sendMessage(message) {
+    this.setState({messages: [...this.state.messages, message]});
+    console.log(this.state);
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
 
@@ -39,7 +46,8 @@ class App extends Component {
       <div>
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
-          <ChatInput />
+          <ChatPanel messages={this.state.messages}/>
+          <ChatInput onMessageSent={message => this.sendMessage(message)}/>
           <VideoDetail video={this.state.selectedVideo} />
           <VideoList
             onVideoSelect={selectedVideo => this.setState({selectedVideo})}
