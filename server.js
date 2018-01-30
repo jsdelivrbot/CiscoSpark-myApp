@@ -1,24 +1,33 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// This will inlcude a body in the request when getting post
+app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-io.on('connection', function(socket){
-  console.log('socket.io test connection');
+app.post('/', function (req, res) {
+  console.log("We got a webhook WEEEE!");
 
-  // socket.on('disconnect', function(){
-  //   console.log('user disconnected');
-  // });
+  var messageId = req.body.data.id;
+  var personId = req.body.data.personId;
+  var personEmail = req.body.data.personEmail;
 
-  // socket.on('authenticate', function(){
-  //   console.log('Trying to authenticate...');
-  //   // initiate the login sequence if not authenticated.
-  //   spark.authorization.initiateLogin();
-  // });
-});
+  console.log("messageId: " + messageId);
+  console.log("personId: " + personId);
+  console.log("personEmail: " + personEmail);
+
+  io.on('connection', function(socket){
+    socket.emit('messageReceived', messageId, personId);
+    console.log('socket.io test connection');
+  });
+
+  res.end();
+})
+
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
