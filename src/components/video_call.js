@@ -10,7 +10,11 @@ class VideoCall extends Component {
   render() {
     return (
       <div className="video-call col-md-3">
+        <video style={{ width: '100%' }} id="self-view" muted autoPlay></video>
+        <video style={{ width: '100%' }} id="remote-view" autoPlay></video>
+
         <input
+          className="form-control"
           id="invitee"
           name="invitee"
           placeholder="Person ID or Email Address or SIP URI or Room ID"
@@ -18,6 +22,7 @@ class VideoCall extends Component {
         </input>
 
         <input
+          className="btn btn-primary"
           title="dial"
           type="submit"
           value="dial"
@@ -25,6 +30,7 @@ class VideoCall extends Component {
         </input>
 
         <input
+          className="btn btn-primary"
           id="hangup"
           title="hangup"
           type="submit"
@@ -35,8 +41,10 @@ class VideoCall extends Component {
   }
 
   onCall(event) {
+    console.log("kat is cute");
     const callee = document.getElementById(`invitee`).value;
     this.setState({ called: true });
+    this.props.onDial(callee);
   }
 }
 
