@@ -14,16 +14,20 @@ app.post('/', function (req, res) {
 
   var messageId = req.body.data.id;
   var personId = req.body.data.personId;
-  socket.emit('messageReceived');
+  var personEmail = req.body.data.personEmail;
+
+  console.log("messageId: " + messageId);
+  console.log("personId: " + personId);
+  console.log("personEmail: " + personEmail);
+
+  io.on('connection', function(socket){
+    socket.emit('messageReceived', messageId, personId);
+    console.log('socket.io test connection');
+  });
 
   res.end();
 })
 
-io.on('connection', function(socket){
-  console.log('socket.io test connection');
-
-  socket.emit('messageReceived');
-});
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
