@@ -11,6 +11,7 @@ import VideoCall from './components/video_call';
 
 const API_KEY = 'AIzaSyCmIDGCn6iZ3s2KH0MYhD7q1-pKnVvJmlI';
 
+// Initialize Cisco spark
 let redirect_uri = `${window.location.protocol}//${window.location.host}`;
 if (window.location.pathname) {
   redirect_uri += window.location.pathname;
@@ -18,16 +19,29 @@ if (window.location.pathname) {
 console.log(redirect_uri);
 
 const spark = CiscoSpark.init({
-  //config: {
+  config: {
     credentials: {
-      access_token: 'OTExMDFiNWYtMWM4YS00ZmFiLWE0ZmQtOTZhN2Y3NDljMjFkNDYwYmI2N2ItNjk4'
-      // client_id: 'Cc10a118c61537a4318aec92364ac632c76c7c2323b9d3214211dd1975ce59323',
-      // redirect_uri,
-      // scope: 'spark:all spark:kms'
+      // access_token: 'OTExMDFiNWYtMWM4YS00ZmFiLWE0ZmQtOTZhN2Y3NDljMjFkNDYwYmI2N2ItNjk4'
+      client_id: 'Cc10a118c61537a4318aec92364ac632c76c7c2323b9d3214211dd1975ce59323',
+      redirect_uri,
+      scope: 'spark:all spark:kms'
     }
-  //}
+  }
 });
 
+spark.once(`ready`, function() {
+  if (!spark.canAuthorize) {
+    // initiate the login sequence if not authenticated.
+    spark.authorization.initiateLogin();
+  }
+});
+
+spark.phone.register()
+  .catch((err) => {
+    console.error(err);
+    alert(err);
+    throw err;
+  });
 
 class App extends Component {
   constructor(props) {
@@ -39,14 +53,8 @@ class App extends Component {
       messages: []
     };
 
+    // Set default video search
     this.videoSearch('surfboards');
-
-    spark.phone.register()
-      .catch((err) => {
-        console.error(err);
-        alert(err);
-        throw err;
-      });
   }
 
   bindCallEvents(call) {
