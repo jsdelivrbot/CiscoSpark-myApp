@@ -50,11 +50,19 @@ spark.phone.register()
   });
 
 // Initialize webhook
-const wh = spark.webhooks.create({
-  resource: 'messages',
-  event: 'created',
-  targetUrl: 'http://2608e18f.ngrok.io',
-  name: 'Test Webhook'
+let currentWebhook = spark.webhooks.list();
+currentWebhook.then(result => {
+  if (result.length === 0) {
+    const wh = spark.webhooks.create({
+      resource: 'messages',
+      event: 'created',
+      targetUrl: 'http://2608e18f.ngrok.io',
+      name: 'Test Webhook'
+    });
+  }
+  else {
+    const wh = result.items[0];
+  }
 });
 
 
