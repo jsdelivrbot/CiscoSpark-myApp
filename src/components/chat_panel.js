@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 
-const ChatPanel = (props) => {
-  const messageSent = '';
-  const messageReceived = '';
+class ChatPanel extends Component {
+  constructor(props) {
+    super(props);
 
-  let messages = props.messages.map((message) => {
-    return (<div>{message}</div>);
-  });
+    this.state = { messages: '' };
+  }
 
-  console.log(messages);
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.messages);
 
-  return (<div>{messages}</div>);
+    let messages = nextProps.messages.map((message) => {
+      return (<div>{message}</div>);
+    });
+
+    this.setState({ messages: messages });
+  }
+
+  render() {
+    return (
+      <div>{this.state.messages}</div>
+    );
+  }
 }
 
 export default ChatPanel;

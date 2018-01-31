@@ -24,7 +24,7 @@ app.post('/', function (req, res) {
   socket.emit('messageReceived', messageId, personId);
 
   res.end();
-})
+});
 
 
 http.listen(3000, function(){
