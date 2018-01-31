@@ -82,22 +82,15 @@ class App extends Component {
 
   componentWillMount() {
     // Initialize socket.io
-    socket.on('messageReceived', function(messageId, personId){
-      console.log("We received a message here!");
+    socket.on('messageReceived', (messageId, personId) => {
       let person = spark.people.get(personId);
       let message = spark.messages.get(messageId);
-      Promise.all([person, message]).then(function(values) {
-        let msg = values[0].displayName + ": " + values[1].text;
-        console.log(msg);
+      Promise.all([person, message]).then(values => {
+        this.setState(preState => ({
+          messages: [...preState.messages, values[0].displayName + ": " + values[1].text]
+        }));
       });
-      // this.setState({messages: [...this.state.messages, msg]});
     });
-  }
-
-  componentDidUnmount() {
-    wh.then((result => {
-      spark.webhooks.remove(result.id);
-    }));
   }
 
   bindCallEvents(call) {
