@@ -140,13 +140,15 @@ class App extends Component {
       <div>
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
-          <ChatPanel messages={this.state.messages}/>
-          <ChatInput onMessageSent={(message, email) => this.sendMessage(message, email)}/>
-          <VideoCall onDial={callee => {
-              const call = spark.phone.dial(callee);
-              this.bindCallEvents(call);
-              console.log("dan is bass");
-            }}/>
+          <div className="d-flex flex-column col-md-3">
+            <ChatPanel messages={this.state.messages}/>
+            <ChatInput onMessageSent={(message, email) => this.sendMessage(message, email)}/>
+              <VideoCall onDial={callee => {
+                const call = spark.phone.dial(callee);
+                this.bindCallEvents(call);
+                console.log("dan is bass");
+              }}/>
+          </div>
           <VideoDetail video={this.state.selectedVideo} />
           <VideoList
             onVideoSelect={selectedVideo => this.setState({selectedVideo})}

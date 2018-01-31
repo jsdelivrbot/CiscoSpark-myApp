@@ -9,12 +9,11 @@ class VideoCall extends Component {
 
   render() {
     return (
-      <div className="video-call col-md-3">
+      <div className="video-call">
         <video style={{ width: '100%' }} id="self-view" muted autoPlay></video>
         <video style={{ width: '100%' }} id="remote-view" autoPlay></video>
 
         <input
-          className="form-control"
           id="invitee"
           name="invitee"
           placeholder="Person ID or Email Address or SIP URI or Room ID"
@@ -22,7 +21,6 @@ class VideoCall extends Component {
         </input>
 
         <input
-          className="btn btn-primary"
           title="dial"
           type="submit"
           value="dial"
@@ -30,7 +28,6 @@ class VideoCall extends Component {
         </input>
 
         <input
-          className="btn btn-primary"
           id="hangup"
           title="hangup"
           type="submit"

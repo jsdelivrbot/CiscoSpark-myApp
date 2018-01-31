@@ -19,7 +19,7 @@ class ChatPanel extends Component {
 
   render() {
     return (
-      <div>{this.state.messages}</div>
+      <div className="pre-scrollable">{this.state.messages}</div>
     );
   }
 }

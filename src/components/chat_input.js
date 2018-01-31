@@ -14,26 +14,29 @@ class ChatInput extends Component {
 
   render() {
     return (
-      <div className="chat-room col-md-3">
+      <div className="chat-room">
         <input
           className="to-person-email"
-          id='toPersonEmail' />
+          placeholder="Email Address of the person you wanna message to"
+          id='toPersonEmail'>
+        </input>
         <input
           type="button"
           id="btnSubmit"
           value="Submit"
-          className="btn btn-primary"
-          onClick={event => this.onPersonEmailEntered(event)} />
+          onClick={event => this.onPersonEmailEntered(event)}>
+        </input>
         <input
           className="message-input"
+          placeholder="Enter the message here :)"
           id='messageInput'
           onKeyDown={event => this.onKeyPressed(event)}
-          onChange={event => this.onInputChange(event)} />
+          onChange={event => this.onInputChange(event)}>
+        </input>
         <input
           type="button"
           id="btnSend"
           value="Send"
-          className="btn btn-primary"
           onClick={event => this.onSend(event)} />
       </div>
     );
