@@ -14,6 +14,9 @@ import VideoCall from './components/video_call';
 
 const API_KEY = 'AIzaSyCmIDGCn6iZ3s2KH0MYhD7q1-pKnVvJmlI';
 
+// Initialize socket.io
+const socket = io();
+
 // Initialize Cisco spark
 let redirect_uri = `${window.location.protocol}//${window.location.host}`;
 if (window.location.pathname) {
@@ -54,9 +57,6 @@ const wh = spark.webhooks.create({
   name: 'Test Webhook'
 });
 
-// Initialize socket.io
-var socket = io();
-
 
 class App extends Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class App extends Component {
     this.videoSearch('surfboards');
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // Initialize socket.io
     let msg = "";
     socket.on('messageReceived', function(messageId, personId){
@@ -80,19 +80,17 @@ class App extends Component {
       let message = spark.messages.get(messageId);
       let person = spark.people.get(personId);
       person.then(result => {
-        console.log(result.displayName);
         msg += result.displayName + ": ";
       });
       message.then(result => {
-        console.log(result.text);
         msg += result.text;
       });
+      console.log(msg);
+      // this.setState({messages: [...this.state.messages, msg]});
     });
-
-    this.setState({messages: [...this.state.messages, msg]});
   }
 
-  componentWillUnmount() {
+  componentDidUnmount() {
     wh.then((result => {
       spark.webhooks.remove(result.id);
     }));
