@@ -38,7 +38,6 @@ class ChatInput extends Component {
 
   onSend(event) {
     const message = document.getElementById('messageInput').value;
-    console.log(message);
     document.getElementById('messageInput').value = '';
     this.props.onMessageSent(message);
   }
