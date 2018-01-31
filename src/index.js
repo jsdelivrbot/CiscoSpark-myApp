@@ -126,10 +126,10 @@ class App extends Component {
     });
   }
 
-  sendMessage(message) {
+  sendMessage(message, email) {
     spark.messages.create({
       text: message,
-      toPersonEmail: "yche720@student.monash.edu"
+      toPersonEmail: email
     });
   }
 
@@ -141,7 +141,7 @@ class App extends Component {
         <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <div className="row">
           <ChatPanel messages={this.state.messages}/>
-          <ChatInput onMessageSent={message => this.sendMessage(message)}/>
+          <ChatInput onMessageSent={(message, email) => this.sendMessage(message, email)}/>
           <VideoCall onDial={callee => {
               const call = spark.phone.dial(callee);
               this.bindCallEvents(call);

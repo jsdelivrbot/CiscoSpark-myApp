@@ -4,14 +4,28 @@ class ChatInput extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: '' };
+    this.state = {
+      message: '',
+      toPersonEmail: ''
+    };
   }
+
+  personEmail = "";
 
   render() {
     return (
       <div className="chat-room col-md-3">
         <input
-          className="form-control"
+          className="to-person-email"
+          id='toPersonEmail' />
+        <input
+          type="button"
+          id="btnSubmit"
+          value="Submit"
+          className="btn btn-primary"
+          onClick={event => this.onPersonEmailEntered(event)} />
+        <input
+          className="message-input"
           id='messageInput'
           onKeyDown={event => this.onKeyPressed(event)}
           onChange={event => this.onInputChange(event)} />
@@ -26,7 +40,7 @@ class ChatInput extends Component {
   }
 
   onInputChange(event) {
-    this.setState({term: event.target.value});
+    this.setState({message: event.target.value});
   }
 
   onKeyPressed(event) {
@@ -39,7 +53,13 @@ class ChatInput extends Component {
   onSend(event) {
     const message = document.getElementById('messageInput').value;
     document.getElementById('messageInput').value = '';
-    this.props.onMessageSent(message);
+    this.props.onMessageSent(message, this.state.toPersonEmail);
+  }
+
+  onPersonEmailEntered(event) {
+    let email = document.getElementById('toPersonEmail').value;
+    this.setState({toPersonEmail: email});
+    document.getElementById('toPersonEmail').value = '';
   }
 }
 
