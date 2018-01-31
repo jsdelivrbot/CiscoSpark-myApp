@@ -9,21 +9,19 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+var socket;
+io.on('connection', function(mySocket){
+  console.log('socket.io test connection');
+  socket = mySocket;
+});
+
 app.post('/', function (req, res) {
   console.log("We got a webhook WEEEE!");
 
   var messageId = req.body.data.id;
   var personId = req.body.data.personId;
-  var personEmail = req.body.data.personEmail;
 
-  console.log("messageId: " + messageId);
-  console.log("personId: " + personId);
-  console.log("personEmail: " + personEmail);
-
-  io.on('connection', function(socket){
-    socket.emit('messageReceived', messageId, personId);
-    console.log('socket.io test connection');
-  });
+  socket.emit('messageReceived', messageId, personId);
 
   res.end();
 })
