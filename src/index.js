@@ -24,15 +24,16 @@ if (window.location.pathname) {
 }
 
 const spark = CiscoSpark.init({
-  credentials: {
-    access_token: 'OTExMDFiNWYtMWM4YS00ZmFiLWE0ZmQtOTZhN2Y3NDljMjFkNDYwYmI2N2ItNjk4'
-  }
-  // config: {
-    // credentials: {
-      // client_id: 'Cc10a118c61537a4318aec92364ac632c76c7c2323b9d3214211dd1975ce59323',
-      // redirect_uri,
-      // scope: 'spark:all spark:kms'
+  // credentials: {
+  //   access_token: 'OTExMDFiNWYtMWM4YS00ZmFiLWE0ZmQtOTZhN2Y3NDljMjFkNDYwYmI2N2ItNjk4'
   // }
+  config: {
+    credentials: {
+      client_id: 'Cc10a118c61537a4318aec92364ac632c76c7c2323b9d3214211dd1975ce59323',
+      redirect_uri,
+      scope: 'spark:all spark:kms'
+    }
+  }
 });
 
 spark.once(`ready`, function() {
