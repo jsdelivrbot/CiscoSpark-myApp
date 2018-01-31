@@ -82,18 +82,14 @@ class App extends Component {
 
   componentWillMount() {
     // Initialize socket.io
-    let msg = "";
     socket.on('messageReceived', function(messageId, personId){
       console.log("We received a message here!");
-      let message = spark.messages.get(messageId);
       let person = spark.people.get(personId);
-      person.then(result => {
-        msg += result.displayName + ": ";
+      let message = spark.messages.get(messageId);
+      Promise.all([person, message]).then(function(values) {
+        let msg = values[0].displayName + ": " + values[1].text;
+        console.log(msg);
       });
-      message.then(result => {
-        msg += result.text;
-      });
-      console.log(msg);
       // this.setState({messages: [...this.state.messages, msg]});
     });
   }
